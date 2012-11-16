@@ -91,7 +91,7 @@ function contactsReceived() {
         var contactInfo = AppMobi.contacts.getContactData(myContacts[i]);
         var tr = document.createElement("tr");
         tr.setAttribute('id', 'pnid' + contactInfo.id);
-        tr.setAttribute('onClick', 'document.getElementById("iden").value = ' + contactInfo.id + ';');
+        tr.setAttribute('onClick', 'editContact(' + contactInfo.id + ');');
         tr.setAttribute('style', 'background-color:#B8BFD8');
         var id = document.createElement("td");
         id.innerHTML = contactInfo.id;
@@ -114,10 +114,26 @@ function onContactAdded(evt) {
 }
 document.addEventListener('appMobi.contacts.add', onContactAdded);
 
+
+function onChooseContact(evt) {
+    console.log("onChooseContact");
+
+    if (evt.success == true) {
+        AppMobi.contacts.editContact(evt.contactid);
+    }
+    else if (evt.cancelled == true) {
+        alert("Choose Contact Cancelled");
+    }
+}
+document.addEventListener('appMobi.contacts.choose', onChooseContact);
+
+
+function chooseContact() {
+    AppMobi.contacts.chooseContact();
+}
+
 function getContacts() {
-    console.log("getContacts 1");
     AppMobi.contacts.getContacts();
-    console.log("getContacts 2");
 }
 function addContact() {
     var first="Jane";
@@ -130,6 +146,9 @@ function addContact() {
     var phone = "215-555-1212";
     var email = first + "." + last + "@hotmail.com";
     AppMobi.contacts.addContact("appMobi_"+last, first, last, street, city, state, zip, country, phone, email);
+}
+function editContact(id) {
+    AppMobi.contacts.editContact(id);
 }
 
 </script>
@@ -145,6 +164,7 @@ function addContact() {
         appMobi Contacts Tutorial.<br /><br />
         <button onclick="getContacts();">Get All Contacts</button><br />
         <button onclick="addContact();">Add Contacts</button><br /><br />
+        <button onclick="chooseContact();">Choose Contacts</button><br /><br />
 
         <h1>Contacts</h1>
         <table id="contacts"></table>
