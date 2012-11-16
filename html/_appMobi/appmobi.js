@@ -300,8 +300,8 @@ AppMobi.Contacts.prototype.getContacts = function () {
     AppMobi.exec("AppMobiContacts~GetContacts~");
 }
 
-AppMobi.Contacts.prototype.addContact = function () {
-    AppMobi.exec("AppMobiContacts~AddContact~", first, last, street, city, state, zip, country, phone, email);
+AppMobi.Contacts.prototype.addContact = function (remoteId, first, last, street, city, state, zip, country, phone, email) {
+    AppMobi.exec("AppMobiContacts~AddContact~", remoteId, first, last, street, city, state, zip, country, phone, email);
 }
 
 AppMobi.Contacts.prototype.chooseContact = function () {

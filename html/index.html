@@ -120,16 +120,16 @@ function getContacts() {
     console.log("getContacts 2");
 }
 function addContact() {
-    first="ryan";
-    last = "fiorini";
-    street = "1234 high st.";
-    city = "philadelphia";
-    state = "PA";
-    zip = "19081";
-    country = "USA";
-    phone = "215-555-1212";
-    email = "ryan.fio@me.com";
-    AppMobi.contacts.addContact(first, last, street, city, state, zip, country, phone, email);
+    var first="Jane";
+    var last = "Doe_" + Math.floor(Math.random() * 999999);
+    var street = "1234 high st.";
+    var city = "philadelphia";
+    var state = "PA";
+    var zip = "19081";
+    var country = "USA";
+    var phone = "215-555-1212";
+    var email = first + "." + last + "@hotmail.com";
+    AppMobi.contacts.addContact("appMobi_"+last, first, last, street, city, state, zip, country, phone, email);
 }
 
 </script>
