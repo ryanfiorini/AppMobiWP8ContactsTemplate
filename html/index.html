@@ -24,7 +24,16 @@
     #content {
         display: none;
     }
-
+    #addContact {
+        position:absolute;
+        top:0;
+        left:0;
+        bottom:0;
+        right:0;
+        z-index:100;
+        background-color:#fff;
+        display:none;
+    }
     /*  If you use this the AppMobi.display.useViewport wi not work
     @-ms-viewport { width: 480px; }
     @viewport { width: 480px; }*/
@@ -93,12 +102,25 @@ function contactsReceived() {
         tr.setAttribute('id', 'pnid' + contactInfo.id);
         tr.setAttribute('onClick', 'editContact(' + contactInfo.id + ');');
         tr.setAttribute('style', 'background-color:#B8BFD8');
+
         var id = document.createElement("td");
         id.innerHTML = contactInfo.id;
         tr.appendChild(id);
-        var msg = document.createElement("td");
-        msg.innerHTML = contactInfo.name;
-        tr.appendChild(msg);
+
+        var name = document.createElement("td");
+        name.innerHTML = contactInfo.name;
+        tr.appendChild(name);
+
+        var phone = document.createElement("td");
+        if (contactInfo.phones.length > 0)
+            phone.innerHTML = contactInfo.phones[0];
+        tr.appendChild(phone);
+
+        var email = document.createElement("td");
+        if (contactInfo.emails.length>0)
+            email.innerHTML = contactInfo.emails[0];
+        tr.appendChild(email);
+
         table.appendChild(tr);
     }
 }
@@ -107,6 +129,7 @@ document.addEventListener('appMobi.contacts.get', contactsReceived, false);
 function onContactAdded(evt) {
     if (evt.success == true) {
         alert("Contact " + evt.contactid + " successfully added");
+        document.getElementById("addContact").style.display = "none";
     }
     else if (evt.cancelled == true) {
         alert("Add Contact Cancelled");
@@ -132,20 +155,39 @@ function chooseContact() {
     AppMobi.contacts.chooseContact();
 }
 
+function removeContact() {
+    var myContacts = AppMobi.contacts.getContactList();
+    var contactInfo = AppMobi.contacts.getContactData(myContacts[0]);
+
+    AppMobi.contacts.removeContact(contactInfo.id);
+}
+
+function onContactRemoved(evt) {
+    if (evt.success == true) {
+        alert("Contact " + evt.contactid + " has been removed");
+        getContacts();
+    }
+}
+document.addEventListener('appMobi.contacts.remove', onContactRemoved);
+
 function getContacts() {
     AppMobi.contacts.getContacts();
 }
+function showAddContact() {
+    document.getElementById("addContact").style.display = "block";
+}
+
 function addContact() {
-    var first="Jane";
-    var last = "Doe_" + Math.floor(Math.random() * 999999);
-    var street = "1234 high st.";
-    var city = "philadelphia";
-    var state = "PA";
-    var zip = "19081";
-    var country = "USA";
-    var phone = "215-555-1212";
-    var email = first + "." + last + "@hotmail.com";
-    AppMobi.contacts.addContact("appMobi_"+last, first, last, street, city, state, zip, country, phone, email);
+    var first = document.getElementById("firstName").value;
+    var last = document.getElementById("lastName").value;
+    var street = document.getElementById("street").value;
+    var city = document.getElementById("city").value;
+    var state = document.getElementById("state").value;
+    var zip = document.getElementById("zip").value;
+    var country = document.getElementById("country").value;
+    var phone = document.getElementById("phone").value;
+    var email = document.getElementById("email").value;
+    AppMobi.contacts.addContact(first, last, street, city, state, zip, country, phone, email);
 }
 function editContact(id) {
     AppMobi.contacts.editContact(id);
@@ -163,12 +205,28 @@ function editContact(id) {
         <br /> 
         appMobi Contacts Tutorial.<br /><br />
         <button onclick="getContacts();">Get All Contacts</button><br />
-        <button onclick="addContact();">Add Contacts</button><br /><br />
+        <button onclick="showAddContact();">Add Contacts</button><br /><br />
         <button onclick="chooseContact();">Choose Contacts</button><br /><br />
+        <button onclick="removeContact();">Remove First Contacts</button><br /><br />
 
         <h1>Contacts</h1>
         <table id="contacts"></table>
-
+        <div id="addContact">
+            <h1>Add Contact</h1>
+            <fieldset>
+                <legend>Contact Information:</legend>
+                First Name: <input id="firstName" value="Jane" type="text"><br>
+                Last Name: <input id="lastName" value="Doe" type="text"><br>
+                Street: <input id="street" value="1234 E. Main St" type="text"><br>
+                City: <input id="city" value="Philadelphia" type="text"><br>
+                State: <input id="state" value="PA" type="text"><br>
+                Zip: <input id="zip" value="12345" type="text"><br>
+                Country: <input id="country" value="US" type="text"><br>
+                Phone: <input id="phone" value="800-555-1212" type="text"><br>
+                Email: <input id="email" value="jane.doe@hotmail.com" type="text"><br>
+                <button onclick="addContact();">Add Contacts</button><br /><br />
+            </fieldset>
+        </div>
     </div>
 </body>
 </html>
