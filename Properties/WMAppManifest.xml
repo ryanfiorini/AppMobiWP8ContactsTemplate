@@ -2,7 +2,7 @@
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
   <App xmlns="" ProductID="{08032b61-6a47-494c-8a5b-3babc77da516}" Title="AppMobiWP8ContactsTemplate" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="AppMobiWP8ContactsTemplate author" Description="Sample description" Publisher="AppMobiWP8ContactsTemplate" PublisherID="{58f594e3-68d2-4f7d-af22-fa3a4fc09b1d}">
-    <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
+    <IconPath IsRelative="true" IsResource="false">appmobi.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
       <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
