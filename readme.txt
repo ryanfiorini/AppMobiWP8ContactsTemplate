@@ -6,6 +6,8 @@ This template will pull down an AppMobiPage.xaml and the necessary HTML content 
 
 * You will need to update the WMAppManifest.xml in the Properties folder.  Change the Navigation Page to AppMobiPage.xaml then 
   go into the Capabilities tab and add ID_CAP_ISV_CONTACTS.
+The default appMobi splash screen is located in the Assets directory.  You will need to replace ours with your own custom one for 
+landscape and portrait.
 
 AppMobiWebSource.xml:
    This file is used to list all the files to be loaded into isolated storage for navigating in the WebBrowser.
